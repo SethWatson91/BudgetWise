@@ -11,7 +11,6 @@
         public bool IsActive { get; set; }
 
         //Navigation
-        public User User { get; set; } = null!;
         public ICollection<SinkingFundContribution> Contributions { get; set; } = new List<SinkingFundContribution>();
 
     }

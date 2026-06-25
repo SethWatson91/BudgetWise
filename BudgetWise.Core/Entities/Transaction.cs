@@ -15,7 +15,6 @@
         public DateTimeOffset CreatedAt { get; set; }
 
         //Navigation
-        public User User { get; set; } = null!;
         public BudgetLine? BudgetLine { get; set; }
         public BudgetPlan BudgetPlan { get; set; } = null!;
     }

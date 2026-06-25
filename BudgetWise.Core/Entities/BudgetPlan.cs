@@ -10,7 +10,6 @@
         public DateTimeOffset CreatedAt { get; set; }
 
         //Navigation
-        public User User { get; set; } = null!;
         public ICollection<BudgetCategory> Categories { get; set; } = new List<BudgetCategory>();
     }
 }

@@ -29,10 +29,6 @@ namespace BudgetWise.Infrastructure.Data
             entity.HasKey(e => e.Id);
             entity.Property(e => e.TotalIncome).HasPrecision(18, 2);
             entity.HasIndex(e => new { e.UserId, e.Month, e.Year }).IsUnique();
-            entity.HasOne(e => e.User)
-                .WithMany(e => e.BudgetPlans)
-                .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
             });
 
             //BudgetCategory
@@ -64,10 +60,6 @@ namespace BudgetWise.Infrastructure.Data
                 entity.Property(e => e.Amount).HasPrecision(18, 2);
                 entity.HasIndex(e => e.UserId);
                 entity.HasIndex(e => e.TransactionDate);
-                entity.HasOne(e => e.User)
-                      .WithMany()
-                      .HasForeignKey(e => e.UserId)
-                      .OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(e => e.BudgetPlan)
                       .WithMany()
                       .HasForeignKey(e => e.BudgetPlanId)
@@ -84,10 +76,6 @@ namespace BudgetWise.Infrastructure.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.TargetAmount).HasPrecision(18, 2);
                 entity.Property(e => e.CurrentBalance).HasPrecision(18, 2);
-                entity.HasOne(e => e.User)
-                      .WithMany()
-                      .HasForeignKey(e => e.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // SinkingFundContribution
