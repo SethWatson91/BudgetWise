@@ -84,6 +84,7 @@ builder.Services.AddScoped<BudgetPlanService>();
 builder.Services.AddScoped<BudgetCategoryService>();
 builder.Services.AddScoped<BudgetLineService>();
 builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<SinkingFundService>();
 
 
 var app = builder.Build();
