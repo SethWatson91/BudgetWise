@@ -1,4 +1,5 @@
-﻿using BudgetWise.Core.DTOs;
+﻿using Asp.Versioning;
+using BudgetWise.Core.DTOs;
 using BudgetWise.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 namespace BudgetWise.API.Controllers
 {
     [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/v1/budget-plans/{budgetPlanId}/categories")]
     [Authorize]
     public class BudgetCategoriesController : ControllerBase

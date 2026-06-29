@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using BudgetWise.API.Middleware;
 using BudgetWise.Infrastructure.Data;
 using BudgetWise.Infrastructure.Services;
@@ -5,10 +6,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
 using System.Text;
-using Microsoft.OpenApi.Models;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -122,6 +123,14 @@ builder.Services.AddScoped<BudgetCategoryService>();
 builder.Services.AddScoped<BudgetLineService>();
 builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<SinkingFundService>();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
+
 
 
 var app = builder.Build();
