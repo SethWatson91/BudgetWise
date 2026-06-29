@@ -1,3 +1,4 @@
+using BudgetWise.API.Middleware;
 using BudgetWise.Infrastructure.Data;
 using BudgetWise.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -88,6 +89,7 @@ builder.Services.AddScoped<SinkingFundService>();
 
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
