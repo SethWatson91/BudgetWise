@@ -15,7 +15,7 @@ namespace BudgetWise.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<List<BudgetLineDto>> GetAllAsync(Guid BudgetCategoryId, Guid budgetPlanId, string userId)
+        public async Task<List<BudgetLineDto>> GetAllAsync(Guid budgetCategoryId, Guid budgetPlanId, string userId)
         {
             var planExists = await _context.BudgetPlans
                 .AnyAsync(p => p.Id == budgetPlanId && p.UserId == userId);
@@ -24,7 +24,7 @@ namespace BudgetWise.Infrastructure.Services
                 return new List<BudgetLineDto>();
 
             return await _context.BudgetLines
-                .Where(l => l.BudgetCategoryId == BudgetCategoryId)
+                .Where(l => l.BudgetCategoryId == budgetCategoryId)
                 .OrderBy(l => l.SortOrder)
                 .Select(l => new BudgetLineDto
                 {
@@ -121,7 +121,7 @@ namespace BudgetWise.Infrastructure.Services
             };
         }
 
-        public async Task<BudgetLineDto?> UpdateAsync(Guid id, Guid budgetCategoryId, Guid budgetPlanId, UpdateBudgetLineDto dto, string userId)
+        public async Task<BudgetLineDto?> UpdateAsync(Guid id,  Guid budgetCategoryId, Guid budgetPlanId, UpdateBudgetLineDto dto, string userId)
         {
             var planExists = await _context.BudgetPlans
                 .AnyAsync(p => p.Id == budgetPlanId && p.UserId == userId);
