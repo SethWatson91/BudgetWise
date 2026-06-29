@@ -81,6 +81,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<BudgetPlanService>();
+builder.Services.AddScoped<BudgetCategoryService>();
 
 
 var app = builder.Build();
