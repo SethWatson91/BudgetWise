@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace BudgetWise.API.Controllers
 {
     [ApiController]
-    [Route("api/budgetplans/{budgetPlanId}/categories/{budgetCategoryId}/lines")]
+    [Route("api/v1/budget-plans/{budgetPlanId}/categories/{budgetCategoryId}/lines")]
     [Authorize]
     public class BudgetLinesController : ControllerBase
     {
@@ -21,14 +21,14 @@ namespace BudgetWise.API.Controllers
             User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(Guid budgetPlanId, Guid budgetCategoryId)
+        public async Task<IActionResult> GetAll( Guid budgetCategoryId, Guid budgetPlanId)
         {
             var budgetLines = await _budgetLineService.GetAllAsync(budgetCategoryId, budgetPlanId, GetUserId());
             return Ok(budgetLines);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById( Guid budgetPlanId, Guid budgetCategoryId, Guid id)
+        public async Task<IActionResult> GetById( Guid budgetCategoryId, Guid budgetPlanId, Guid id)
         {
             var budgetLine = await _budgetLineService.GetByIdAsync(id, budgetCategoryId, budgetPlanId, GetUserId());
             if (budgetLine == null)
@@ -37,7 +37,7 @@ namespace BudgetWise.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Guid budgetPlanId, Guid budgetCategoryId, [FromBody] CreateBudgetLineDto dto)
+        public async Task<IActionResult> Create(Guid budgetCategoryId, Guid budgetPlanId, [FromBody] CreateBudgetLineDto dto)
         {
             var budgetLine = await _budgetLineService.CreateAsync(budgetCategoryId, budgetPlanId, dto, GetUserId());
             if (budgetLine == null)
@@ -46,7 +46,7 @@ namespace BudgetWise.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid budgetPlanId, Guid budgetCategoryId, Guid id, [FromBody] UpdateBudgetLineDto dto)
+        public async Task<IActionResult> Update(Guid id, Guid budgetCategoryId, Guid budgetPlanId, [FromBody] UpdateBudgetLineDto dto)
         {
             var budgetLine = await _budgetLineService.UpdateAsync(id, budgetCategoryId, budgetPlanId, dto, GetUserId());
             if (budgetLine == null)
@@ -55,7 +55,7 @@ namespace BudgetWise.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid budgetPlanId, Guid budgetCategoryId, Guid id)
+        public async Task<IActionResult> Delete(Guid id, Guid budgetCategoryId, Guid budgetPlanId)
         {
             var success = await _budgetLineService.DeleteAsync(id, budgetCategoryId, budgetPlanId, GetUserId());
             if (!success)

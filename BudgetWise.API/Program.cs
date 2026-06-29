@@ -83,6 +83,7 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<BudgetPlanService>();
 builder.Services.AddScoped<BudgetCategoryService>();
 builder.Services.AddScoped<BudgetLineService>();
+builder.Services.AddScoped<TransactionService>();
 
 
 var app = builder.Build();
