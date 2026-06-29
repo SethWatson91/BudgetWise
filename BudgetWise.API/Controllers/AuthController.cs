@@ -1,4 +1,5 @@
-﻿using BudgetWise.Core.Entities;
+﻿using Asp.Versioning;
+using BudgetWise.Core.Entities;
 using BudgetWise.Infrastructure.Data;
 using BudgetWise.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BudgetWise.API.Controllers
 {
     [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/v1/auth")]
     public class AuthController : ControllerBase
     {
