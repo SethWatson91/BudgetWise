@@ -20,6 +20,11 @@ namespace BudgetWise.API.Controllers
         private string GetUserId() =>
             User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
+        /// <summary>
+        /// Returns all budget lines for a specific category.
+        /// </summary>
+        /// <param name="budgetPlanId">The budget plan ID.</param>
+        /// <param name="budgetCategoryId">The category ID.</param>
         [HttpGet]
         public async Task<IActionResult> GetAll( Guid budgetCategoryId, Guid budgetPlanId)
         {
@@ -27,6 +32,12 @@ namespace BudgetWise.API.Controllers
             return Ok(budgetLines);
         }
 
+        /// <summary>
+        /// Returns a specific budget line by ID.
+        /// </summary>
+        /// <param name="budgetPlanId">The budget plan ID.</param>
+        /// <param name="budgetCategoryId">The category ID.</param>
+        /// <param name="id">The budget line ID.</param>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById( Guid budgetCategoryId, Guid budgetPlanId, Guid id)
         {
@@ -36,6 +47,11 @@ namespace BudgetWise.API.Controllers
             return Ok(budgetLine);
         }
 
+        /// <summary>
+        /// Creates a new budget line within a category.
+        /// </summary>
+        /// <param name="budgetPlanId">The budget plan ID.</param>
+        /// <param name="budgetCategoryId">The category ID.</param>
         [HttpPost]
         public async Task<IActionResult> Create(Guid budgetCategoryId, Guid budgetPlanId, [FromBody] CreateBudgetLineDto dto)
         {
@@ -45,6 +61,12 @@ namespace BudgetWise.API.Controllers
             return Ok(budgetLine);
         }
 
+        /// <summary>
+        /// Updates an existing budget line.
+        /// </summary>
+        /// <param name="id">The budget line ID.</param>
+        /// <param name="budgetPlanId">The budget plan ID.</param>
+        /// <param name="budgetCategoryId">The category ID.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, Guid budgetCategoryId, Guid budgetPlanId, [FromBody] UpdateBudgetLineDto dto)
         {
@@ -54,6 +76,12 @@ namespace BudgetWise.API.Controllers
             return Ok(budgetLine);
         }
 
+        /// <summary>
+        /// Deletes a budget line and all associated transactions.
+        /// </summary>
+        /// <param name="id">The budget line ID.</param>
+        /// <param name="budgetPlanId">The budget plan ID.</param>
+        /// <param name="budgetCategoryId">The category ID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id, Guid budgetCategoryId, Guid budgetPlanId)
         {

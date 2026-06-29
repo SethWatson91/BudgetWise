@@ -21,6 +21,9 @@ namespace BudgetWise.API.Controllers
         private string GetUserId() =>
             User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
+        /// <summary>
+        /// Returns all budget plans for the authenticated user.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -28,7 +31,10 @@ namespace BudgetWise.API.Controllers
             return Ok(plans);
         }
 
-
+        /// <summary>
+        /// Returns a specific budget plan by ID.
+        /// </summary>
+        /// <param name="id">The budget plan ID.</param>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -38,6 +44,10 @@ namespace BudgetWise.API.Controllers
             return Ok(plan);
         }
 
+        /// <summary>
+        /// Creates a new monthly budget plan for the authenticated user.
+        /// </summary>
+        /// <remarks>Only one plan is allowed per user per month and year.</remarks>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBudgetPlanDto dto)
         {
@@ -52,6 +62,10 @@ namespace BudgetWise.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the total income for an existing budget plan.
+        /// </summary>
+        /// <param name="id">The budget plan ID.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id,  [FromBody] UpdateBudgetPlanDto dto)
         {
@@ -61,6 +75,10 @@ namespace BudgetWise.API.Controllers
             return Ok(plan);
         }
 
+        /// <summary>
+        /// Deletes a budget plan and all associated categories, lines, and transactions.
+        /// </summary>
+        /// <param name="id">The budget plan ID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
