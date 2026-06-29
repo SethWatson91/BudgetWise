@@ -22,9 +22,9 @@ namespace BudgetWise.API.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(Guid budgetPlanId, Guid budgetCategoryId, Guid budgetLineId)
+        public async Task<IActionResult> GetAll(Guid budgetPlanId, Guid budgetCategoryId, Guid budgetLineId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            var transactions = await _transactionService.GetAllAsync(budgetLineId, budgetCategoryId, budgetPlanId, GetUserId());
+            var transactions = await _transactionService.GetAllAsync(budgetLineId, budgetCategoryId, budgetPlanId, GetUserId(), page, pageSize);
             return Ok(transactions);
         }
 
