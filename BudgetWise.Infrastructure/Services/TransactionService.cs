@@ -1,6 +1,8 @@
-﻿using BudgetWise.Core.DTOs;
+﻿using Azure;
+using BudgetWise.Core.DTOs;
 using BudgetWise.Core.Entities;
 using BudgetWise.Core.Enums;
+using BudgetWise.Core.Models;
 using BudgetWise.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,17 +17,23 @@ namespace BudgetWise.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<List<TransactionDto>> GetAllAsync(Guid budgetLineId, Guid budgetCategoryId, Guid budgetPlanId, string userId)
+        public async Task<PagedResult<TransactionDto>> GetAllAsync(Guid budgetLineId, Guid budgetCategoryId, Guid budgetPlanId, string userId, int page = 1, int pageSize = 20)
         {
             var planExists = await _context.BudgetPlans
                 .AnyAsync(p => p.Id == budgetPlanId && p.UserId == userId);
             
             if (!planExists)
-                return new List<TransactionDto>();
-            
-            return await _context.Transactions
+                return new PagedResult<TransactionDto>();
+
+            var query = _context.Transactions
                 .Where(t => t.BudgetLineId == budgetLineId)
-                .OrderByDescending(t => t.TransactionDate)
+                .OrderByDescending(t => t.TransactionDate);
+
+            var totalCount = await query.CountAsync();
+
+            var data = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(t => new TransactionDto
                 {
                     Id = t.Id,
@@ -36,9 +44,17 @@ namespace BudgetWise.Infrastructure.Services
                     TransactionDate = t.TransactionDate,
                     Type = t.Type.ToString(),
                     CreatedAt = t.CreatedAt
-
                 })
                 .ToListAsync();
+
+            return new PagedResult<TransactionDto>
+            {
+                Data = data,
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
+
         }
 
         public async Task<TransactionDto?> GetByIdAsync(Guid id, Guid budgetLineId, Guid budgetCategoryId, Guid budgetPlanId, string userId)
